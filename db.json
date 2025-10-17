@@ -1,0 +1,78 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "fullName": "Nguyễn Văn A",
+      "email": "nguyenvana@gmail.com",
+      "password": "1234567",
+      "phone": "0987654321",
+      "gender": true,
+      "status": true,
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "fullName": "Phạm Thị B",
+      "email": "phamthib@gmail.com",
+      "password": "1234567",
+      "phone": "0987654321",
+      "gender": true,
+      "status": true,
+      "role": "user"
+    },
+    {
+      "id": "b671",
+      "fullName": "New User",
+      "email": "daotrongtri21092006@gmail.com",
+      "password": "1234567",
+      "phone": "",
+      "gender": true,
+      "status": true,
+      "role": "user"
+    },
+    {
+      "id": "8722",
+      "fullName": "",
+      "email": "daotrongtri@gmail.com",
+      "password": "123123123",
+      "phone": "",
+      "gender": true,
+      "status": true,
+      "role": "user"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Tiền đi học",
+      "imageUrl": "",
+      "status": true
+    },
+    {
+      "id": "2",
+      "name": "Tiền đi chơi",
+      "imageUrl": "",
+      "status": false
+    }
+  ],
+  "monthlyCategories": [
+    {
+      "id": "1",
+      "month": "2025-09-30",
+      "balence": 30000,
+      "userId": 1,
+      "categories": [
+        {
+          "id": 1,
+          "categoryId": 1,
+          "budget": 2000
+        },
+        {
+          "id": 2,
+          "categoryId": 2,
+          "budget": 4000
+        }
+      ]
+    }
+  ]
+}
