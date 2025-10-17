@@ -76,7 +76,7 @@ export default function SignUp() {
       
 
       // chuyển sang trang đăng nhập sau 1.5s
-      setTimeout(() => navigate("/sign-in"), 1500);
+      setTimeout(() => navigate("/"), 1500);
     } catch (error) {
       console.error("Error while signing up:", error);
       setErrors({ email: "An error occurred, please try again later." });
@@ -159,7 +159,7 @@ export default function SignUp() {
 
         <p className="text-center text-sm mt-3">
           Already have an account?{" "}
-          <Link to="/signin" className="text-blue-500 hover:underline">
+          <Link to="/" className="text-blue-500 hover:underline">
             Sign In
           </Link>
         </p>

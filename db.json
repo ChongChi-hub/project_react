@@ -39,6 +39,16 @@
       "gender": true,
       "status": true,
       "role": "user"
+    },
+    {
+      "id": "ecc7",
+      "fullName": "",
+      "email": "admin@gmail.com",
+      "password": "123123",
+      "phone": "",
+      "gender": true,
+      "status": true,
+      "role": "admin"
     }
   ],
   "categories": [
