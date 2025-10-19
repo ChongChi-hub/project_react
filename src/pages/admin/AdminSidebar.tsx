@@ -2,20 +2,23 @@ import { LayoutDashboard, Users, Folder, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function AdminSidebar() {
-      const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const menu = [
     { to: "/admin/dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
     { to: "/admin/users", label: "Users", icon: <Users size={18} /> },
     { to: "/admin/category", label: "Category", icon: <Folder size={18} /> },
   ];
+
   const handleLogout = () => {
     localStorage.removeItem("admin");
     navigate("/admin");
   };
 
   return (
-    <div className="h-screen w-56 bg-white border-r shadow-sm flex flex-col">
-      <div className="flex-1 mt-6">
+    <div className="fixed top-0 left-0 h-screen w-56 bg-white border-r shadow-sm flex flex-col justify-between">
+      {/* Menu */}
+      <div className="mt-6">
         {menu.map((item) => (
           <NavLink
             key={item.to}
@@ -31,6 +34,8 @@ export default function AdminSidebar() {
           </NavLink>
         ))}
       </div>
+
+      {/* Logout */}
       <div className="border-t p-4">
         <button
           onClick={handleLogout}
