@@ -1,19 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import '../../assets/css/AdminNavbar.css'
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const handleLogout = (): void => {
+  const handleLogout = () => {
     localStorage.removeItem("admin");
     navigate("/admin");
   };
 
-  // Đóng dropdown khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -25,7 +23,7 @@ export default function AdminNavbar() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between bg-white border-b px-6 py-3 shadow-sm">
+    <div className="fixed top-0 left-0 w-full h-14 bg-white border-b border-gray-200 shadow-sm flex items-center justify-between px-6 z-50">
       {/* Logo */}
       <h1 className="text-xl font-bold">
         Financial <span className="text-indigo-600">Manager</span>
@@ -41,7 +39,7 @@ export default function AdminNavbar() {
         </button>
 
         {open && (
-          <div className="absolute right-0 mt-3 w-44 bg-white border rounded-lg shadow-lg z-50 p-2 animate-fadeIn">
+          <div className="absolute right-0 mt-3 w-44 bg-white border rounded-lg shadow-lg z-50 p-2 border-white">
             <button className="w-full text-sm text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-center">
               Change Password
             </button>

@@ -8,17 +8,15 @@ export default function AdminLayout() {
 
   useEffect(() => {
     const admin = localStorage.getItem("admin");
-    if (!admin) {
-      navigate("/admin"); // chưa đăng nhập -> quay lại trang login
-    }
+    if (!admin) navigate("/admin");
   }, [navigate]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <AdminNavbar />
-      <div className="flex flex-1">
-        <AdminSidebar />
-        <main className="flex-1 p-6 overflow-y-auto">
+    <div className="flex h-screen overflow-hidden">
+      <AdminSidebar />
+      <div className="flex-1 flex flex-col ml-56">
+        <AdminNavbar />
+        <main className="flex-1 bg-gray-50 p-6 mt-14 overflow-hidden">
           <Outlet />
         </main>
       </div>
