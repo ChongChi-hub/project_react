@@ -11,7 +11,8 @@ export default function AdminSidebar() {
   ];
 
   const handleLogout = () => {
-    navigate("/signin");
+    localStorage.removeItem("admin");
+    navigate("/admin");
   };
 
   return (

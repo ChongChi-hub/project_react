@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
-import AdminSidebar from "./AdminSidebar";
-import AdminNavbar from "./AdminNavbar";
+import AdminSidebar from "../../components/ui/admin/AdminSidebar";
+import AdminNavbar from "../../components/ui/admin/AdminNavbar";
+
+
 
 export default function AdminLayout() {
   const navigate = useNavigate();

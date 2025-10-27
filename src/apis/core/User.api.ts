@@ -12,13 +12,12 @@ export interface SignInDTO {
   password: string;
 }
 
-const BASE_URL = import.meta.env.VITE_SV_HOST; // vd: http://localhost:3000
 
 export const UserApi = {
   // Đăng ký
   async signUp(data: SignUpDTO) {
     // Kiểm tra email trùng
-    const res = await axios.get(`${BASE_URL}/users?email=${data.email}`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${data.email}`);
     if (res.data.length > 0) {
       throw new Error("Email đã tồn tại");
     }
@@ -32,13 +31,13 @@ export const UserApi = {
       role: data.role || "user",
     };
 
-    const createRes = await axios.post(`${BASE_URL}/users`, newUser);
+    const createRes = await axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser);
     return createRes.data;
   },
 
   // Đăng nhập
   async signIn(data: SignInDTO) {
-    const res = await axios.get(`${BASE_URL}/users?email=${data.email}`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${data.email}`);
 
     if (res.data.length === 0) {
       throw new Error("Không tìm thấy người dùng");

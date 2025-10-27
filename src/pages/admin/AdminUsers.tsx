@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Table, Tag, Button, Input, Space, message } from "antd";
 import { LockOutlined, UnlockOutlined, SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
-import type { User } from "../../../types/user";
+import type { User } from "../../types/user.type";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<User[]>([]);

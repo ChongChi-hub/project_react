@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000';
+
 
 export interface DashboardStats {
   users: {
@@ -50,9 +50,9 @@ export const DashboardApi = {
   getDashboardStats: async (): Promise<DashboardStats> => {
     try {
       const [usersRes, categoriesRes, monthlyCategoriesRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/users`),
-        axios.get(`${API_BASE_URL}/categories`),
-        axios.get(`${API_BASE_URL}/monthlyCategories`)
+        axios.get(`${import.meta.env.VITE_API_URL}/users`),
+        axios.get(`${import.meta.env.VITE_API_URL}/categories`),
+        axios.get(`${import.meta.env.VITE_API_URL}/monthlyCategories`)
       ]);
 
       const users = usersRes.data;
@@ -124,7 +124,7 @@ export const DashboardApi = {
   // Lấy danh sách khách hàng gần đây
   getRecentCustomers: async (): Promise<RecentCustomer[]> => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/users`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
       const users = response.data;
 
       // Tạo dữ liệu khách hàng gần đây từ users

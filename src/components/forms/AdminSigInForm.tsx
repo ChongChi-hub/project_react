@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import type { User } from "../../types/user";
+import type { User } from "../../types/user.type";
 
 export default function AdminSignInForm() {
   const navigate = useNavigate();

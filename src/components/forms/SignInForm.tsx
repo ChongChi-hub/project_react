@@ -1,40 +1,34 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import type { User } from "../../types/user";
+import type { User } from "../../types/user.type";
 
 export default function SignInForm() {
   const navigate = useNavigate();
 
-  // --- State ---
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // --- Validate email ---
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // --- Submit ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
 
-    // Kiểm tra dữ liệu
     if (!email.trim()) newErrors.email = "Please enter your email.";
     else if (!isValidEmail(email))
       newErrors.email = "Email format is invalid.";
     if (!password.trim()) newErrors.password = "Please enter your password.";
 
-    // Nếu có lỗi
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
     try {
-      // Gửi yêu cầu tìm user theo email
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/users?email=${email}`
       );
@@ -46,7 +40,6 @@ export default function SignInForm() {
 
       const user: User = res.data[0];
 
-      // Kiểm tra mật khẩu
       if (user.password !== password) {
         setErrors({ password: "Incorrect password." });
         return;
@@ -57,15 +50,15 @@ export default function SignInForm() {
       setSuccess(true);
       setErrors({});
 
-      // Chuyển hướng sau 1.5s
-      setTimeout(() => navigate("/"), 1500);
-    } catch (error) {
-      console.error("Error during sign in:", error);
-      setErrors({ email: "An error occurred, please try again later." });
+      // Chờ 2 giây rồi chuyển đến trang user home
+      setTimeout(() => {
+        navigate("/user/information");
+      }, 2000);
+    } catch (err) {
+      console.log(err)
     }
   };
 
-  // --- Giao diện ---
   return (
     <div
       className="flex items-center justify-center h-screen bg-cover bg-center"
@@ -75,7 +68,7 @@ export default function SignInForm() {
         <h2 className="text-center text-xl font-semibold mb-4">Sign In</h2>
 
         {success && (
-          <p className="text-green-600 text-center font-medium mb-3">
+          <p className="text-green-600 text-center font-medium mb-3 animate-pulse">
             Login successfully!
           </p>
         )}

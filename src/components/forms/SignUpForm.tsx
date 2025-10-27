@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import type { User } from "../../types/user";
+import type { User } from "../../types/user.type";
 
 export default function SignUp() {
   const navigate = useNavigate();
