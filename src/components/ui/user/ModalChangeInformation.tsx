@@ -67,8 +67,8 @@ export default function ModalChangeInformation({ open, onClose, user, onUpdate }
         <Form.Item label="Giới tính" name="gender">
           <Select
             options={[
-              { value: "male", label: "Nam" },
-              { value: "female", label: "Nữ" },
+              { value: true, label: "Nam" },
+              { value: false, label: "Nữ" },
             ]}
           />
         </Form.Item>

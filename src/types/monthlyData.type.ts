@@ -1,14 +1,13 @@
-// src/types/monthlyData.type.ts
 export interface CategoryBudget {
-  id: string;
-  categoryId: string;
+  id: number;
+  categoryId: number;
   budget: number;
 }
 
 export interface MonthlyCategory {
   id: string;
-  month: string;       // ví dụ: "2025-09"
-  balence: number;     // số dư còn lại
-  userId: string;      // id người dùng
+  month: string; // YYYY-MM hoặc YYYY-MM-DD
+  balence: number;
+  userId: string;
   categories: CategoryBudget[];
 }

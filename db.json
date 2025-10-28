@@ -27,7 +27,7 @@
       "password": "123123",
       "phone": "0999999999",
       "gender": true,
-      "status": false,
+      "status": true,
       "role": "user"
     },
     {
@@ -37,7 +37,7 @@
       "password": "123123",
       "phone": "0999999999",
       "gender": false,
-      "status": false,
+      "status": true,
       "role": "user"
     }
   ],
@@ -91,6 +91,27 @@
       "month": "2025-10",
       "balence": 28102025,
       "userId": "1",
+      "categories": []
+    },
+    {
+      "id": "22b2",
+      "month": "2025-10",
+      "balence": 0,
+      "userId": "3",
+      "categories": []
+    },
+    {
+      "id": "239f",
+      "month": "2025-02",
+      "balence": 1000000,
+      "userId": "3",
+      "categories": []
+    },
+    {
+      "id": "19c3",
+      "month": "2025-11",
+      "balence": 123123123,
+      "userId": "3",
       "categories": []
     }
   ]
