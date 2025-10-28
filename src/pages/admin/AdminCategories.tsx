@@ -12,7 +12,7 @@ import {
 import { SearchOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import type { Category } from "../../types/category.type";
-import { uploadToCloudinary } from "../../apis/cloundinary";
+import { uploadToCloudinary } from "../../apis/cloudinary";
 
 export default function AdminCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -176,18 +176,39 @@ export default function AdminCategories() {
     setIsModalOpen(true);
   };
 
-  // 🟦 Upload lên Cloudinary thật
-  const handleUpload = async (file: any) => {
-    setUploading(true);
+  // 🟦 Upload lên Cloudinary thật (giữ UI/CSS nguyên)
+  const handleUpload = async (file: File) => {
     try {
-      const imageUrl = await uploadToCloudinary(file);
-      setFileList([{ uid: file.uid, name: file.name, url: imageUrl }]);
+      if (!file.type.startsWith("image/")) {
+        message.error("Chỉ cho phép file ảnh!");
+        return false;
+      }
+      if (file.size / 1024 / 1024 >= 2) {
+        message.error("Ảnh phải nhỏ hơn 2MB!");
+        return false;
+      }
+
+      setUploading(true);
+      const imageUrl = await uploadToCloudinary(file as File);
+
+      // 👇 antd cần shape có status/url để hiển thị
+      setFileList([
+        {
+          uid: String(Date.now()),
+          name: (file as any).name || "image",
+          status: "done",
+          url: imageUrl,
+        },
+      ]);
+
       message.success("Tải ảnh lên thành công!");
-    } catch {
-      message.error("Tải ảnh lên thất bại!");
+    } catch (e: any) {
+      console.error(e);
+      message.error(e?.message || "Tải ảnh lên thất bại!");
     } finally {
       setUploading(false);
     }
+    return false; // chặn antd tự upload
   };
 
   // 🟦 Lưu (thêm hoặc cập nhật)
@@ -278,13 +299,15 @@ export default function AdminCategories() {
           </Form.Item>
 
           <Upload
-            beforeUpload={(file) => {
-              handleUpload(file);
-              return false;
-            }}
+            listType="picture"
+            accept="image/*"
             fileList={fileList}
             onRemove={() => setFileList([])}
-            listType="picture"
+            beforeUpload={(file) => {
+              // antd đưa vào RcFile, nhưng dùng như File được
+              handleUpload(file as unknown as File);
+              return Upload.LIST_IGNORE; // 👈 chặn antd tự thêm, mình tự setFileList
+            }}
           >
             {fileList.length === 0 && (
               <Button
