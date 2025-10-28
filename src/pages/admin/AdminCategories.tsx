@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
-import { Table,Button,Input,Space,message,Modal,Form,Upload,} from "antd";
-import { SearchOutlined,UploadOutlined} from "@ant-design/icons";
+import {
+  Table,
+  Button,
+  Input,
+  Space,
+  message,
+  Modal,
+  Form,
+  Upload,
+} from "antd";
+import { SearchOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import type { Category } from "../../types/category.type";
+import { uploadToCloudinary } from "../../apis/cloundinary";
 
 export default function AdminCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -14,6 +24,7 @@ export default function AdminCategories() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<any[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   // 🟢 Lấy danh sách category
   const fetchCategories = async () => {
@@ -35,15 +46,20 @@ export default function AdminCategories() {
   // 🔴 Chuyển trạng thái category
   const handleToggleStatus = async (category: Category) => {
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/categories/${category.id}`, {
-        status: !category.status,
-      });
+      await axios.patch(
+        `${import.meta.env.VITE_API_URL}/categories/${category.id}`,
+        {
+          status: !category.status,
+        }
+      );
       setCategories((prev) =>
         prev.map((c) =>
           c.id === category.id ? { ...c, status: !category.status } : c
         )
       );
-      message.success(category.status ? "Đã khóa danh mục" : "Đã mở khóa danh mục");
+      message.success(
+        category.status ? "Đã khóa danh mục" : "Đã mở khóa danh mục"
+      );
     } catch {
       message.error("Lỗi khi cập nhật trạng thái!");
     }
@@ -160,6 +176,20 @@ export default function AdminCategories() {
     setIsModalOpen(true);
   };
 
+  // 🟦 Upload lên Cloudinary thật
+  const handleUpload = async (file: any) => {
+    setUploading(true);
+    try {
+      const imageUrl = await uploadToCloudinary(file);
+      setFileList([{ uid: file.uid, name: file.name, url: imageUrl }]);
+      message.success("Tải ảnh lên thành công!");
+    } catch {
+      message.error("Tải ảnh lên thất bại!");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   // 🟦 Lưu (thêm hoặc cập nhật)
   const handleSaveCategory = async () => {
     try {
@@ -167,7 +197,6 @@ export default function AdminCategories() {
       const imageUrl = fileList[0]?.url || "";
 
       if (editingCategory) {
-        // cập nhật
         await axios.patch(
           `${import.meta.env.VITE_API_URL}/categories/${editingCategory.id}`,
           {
@@ -177,7 +206,6 @@ export default function AdminCategories() {
         );
         message.success("Cập nhật danh mục thành công!");
       } else {
-        // thêm mới
         await axios.post(`${import.meta.env.VITE_API_URL}/categories`, {
           name: values.name,
           imageUrl,
@@ -251,9 +279,8 @@ export default function AdminCategories() {
 
           <Upload
             beforeUpload={(file) => {
-              const url = URL.createObjectURL(file);
-              setFileList([{ uid: file.uid, name: file.name, url }]);
-              return false; // Ngăn upload tự động
+              handleUpload(file);
+              return false;
             }}
             fileList={fileList}
             onRemove={() => setFileList([])}
@@ -262,6 +289,7 @@ export default function AdminCategories() {
             {fileList.length === 0 && (
               <Button
                 icon={<UploadOutlined />}
+                loading={uploading}
                 block
                 style={{ background: "#ff6600", color: "white" }}
               >

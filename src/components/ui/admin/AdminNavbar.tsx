@@ -12,6 +12,8 @@ export default function AdminNavbar() {
     navigate("/admin");
   };
 
+  const admin = JSON.parse(localStorage.getItem("admin") || "{}");
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -30,6 +32,7 @@ export default function AdminNavbar() {
       </h1>
 
       {/* Avatar + Dropdown */}
+      <h3 className="text-sm font-medium">{admin.fullName}</h3>
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setOpen(!open)}
@@ -40,9 +43,6 @@ export default function AdminNavbar() {
 
         {open && (
           <div className="absolute right-0 mt-3 w-44 bg-white border rounded-lg shadow-lg z-50 p-2 border-white">
-            <button className="w-full text-sm text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-center">
-              Change Password
-            </button>
             <button
               onClick={handleLogout}
               className="w-full text-sm text-white bg-red-600 hover:bg-red-700 px-3 py-2 rounded-md mt-1 text-center"

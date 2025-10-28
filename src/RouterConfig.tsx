@@ -4,12 +4,12 @@ import SignInPage from "./pages/auth/SignInPage";
 import AdminSignIn from "./pages/admin/AdminSignIn";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminCategories from "./pages/admin/AdminCategories";
-import UserCategory from "./pages/user/UserCategory";
 import UserHistory from "./pages/user/UserHistory";
 import AdminUsers from "./pages/admin/AdminUsers";
-import AdminLayout from "./pages/admin/AdminLayout";
+import AdminLayout from "./components/ui/admin/AdminLayout.tsx";
 import UserLayout from "./pages/user/UserLayout";
 import UserInformation from "./pages/user/UserInformation";
+import UserCategories from "./pages/user/UserCategories.tsx";
 
 
 export default function RouterConfig() {
@@ -20,7 +20,7 @@ export default function RouterConfig() {
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/user" element={<UserLayout />}>
         <Route path="information" element={<UserInformation />} />
-        <Route path="category" element={<UserCategory />} />
+        <Route path="category" element={<UserCategories />} />
         <Route path="history" element={<UserHistory />} />
       </Route>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { getDashboardData } from "../../apis/core/Admin.api"; // ✅ import API tách riêng
 
 export default function AdminDashboard() {
   const [userCount, setUserCount] = useState<number>(0);
@@ -10,15 +10,11 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const [userRes, categoryRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL}/users`),
-        axios.get(`${import.meta.env.VITE_API_URL}/categories`),
-      ]);
-
-      setUserCount(userRes.data.length);
-      setCategoryCount(categoryRes.data.length);
+      const data = await getDashboardData();
+      setUserCount(data.userCount);
+      setCategoryCount(data.categoryCount);
     } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error);
+      console.error("Lỗi khi tải dữ liệu dashboard:", error);
     } finally {
       setLoading(false);
     }
@@ -31,12 +27,10 @@ export default function AdminDashboard() {
   return (
     <div className="flex-1 bg-gray-50 min-h-screen px-8 py-10">
       <div className="max-w-7xl mx-auto">
-        {/* Tiêu đề */}
         <h2 className="text-2xl font-semibold mb-8 text-gray-800">
           Dashboard Overview
         </h2>
 
-        {/* 4 thẻ thống kê */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {/* 🧍 User */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">

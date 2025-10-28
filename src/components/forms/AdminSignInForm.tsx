@@ -5,14 +5,13 @@ import type { User } from "../../types/user.type";
 
 export default function AdminSignInForm() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [generalMessage, setGeneralMessage] = useState("");
-  const [errors, setErrors] = useState({email: "",password: ""});
+  const [errors, setErrors] = useState({ email: "", password: "" });
 
-  // kiểm tra email hợp lệ
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,10 +20,9 @@ export default function AdminSignInForm() {
     setGeneralMessage("");
     setIsSuccess(false);
 
-    let hasError = false;
     const newErrors = { email: "", password: "" };
+    let hasError = false;
 
-    // kiểm tra trống
     if (!email.trim()) {
       newErrors.email = "Please enter your email.";
       hasError = true;
@@ -44,42 +42,43 @@ export default function AdminSignInForm() {
     }
 
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/users?email=${email}`
-      );
+      setIsLoading(true);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${email}`);
 
       if (res.data.length === 0) {
-        setGeneralMessage("Incorrect account or password.");
+        setGeneralMessage("Account not found.");
         return;
       }
 
       const user: User = res.data[0];
 
       if (user.role !== "admin") {
-        setGeneralMessage("Incorrect account or password.");
+        setGeneralMessage("This account is not an admin account.");
         return;
       }
 
-      if (user.status === false) {
-        setGeneralMessage("Your account blocked!, Please contact admin");
+      if (!user.status) {
+        setGeneralMessage("Your account is blocked. Please contact support.");
         return;
       }
 
       if (user.password !== password) {
-        setGeneralMessage("Incorrect account or password.");
+        setGeneralMessage("Incorrect password.");
         return;
       }
 
+      // ✅ Đăng nhập thành công
+      localStorage.setItem("admin", JSON.stringify(user));
       setIsSuccess(true);
       setGeneralMessage("Login successfully!");
-      localStorage.setItem("admin", JSON.stringify(user));
-
       setEmail("");
       setPassword("");
 
       setTimeout(() => navigate("/admin/dashboard"), 1500);
     } catch (error) {
-      setGeneralMessage("An error occurred, please try again later.");
+      setGeneralMessage("An error occurred. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,7 +88,7 @@ export default function AdminSignInForm() {
         <h1 className="text-2xl font-bold text-center text-black mb-2">
           Financial <span className="text-indigo-600">Manager</span>
         </h1>
-        <p className="text-center text-gray-600 mb-6">Please sign in</p>
+        <p className="text-center text-gray-600 mb-6">Please Sign In</p>
 
         {generalMessage && (
           <p
@@ -102,11 +101,10 @@ export default function AdminSignInForm() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email */}
           <div>
             <input
               type="text"
-              placeholder="Please enter your email ..."
+              placeholder="Enter admin email..."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={`w-full border rounded-md px-3 py-2 focus:outline-none ${
@@ -115,16 +113,13 @@ export default function AdminSignInForm() {
                   : "border-gray-300 focus:border-indigo-500"
               }`}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-            )}
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          {/* Password */}
           <div>
             <input
               type="password"
-              placeholder="Please enter your password ..."
+              placeholder="Enter password..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={`w-full border rounded-md px-3 py-2 focus:outline-none ${
@@ -138,23 +133,16 @@ export default function AdminSignInForm() {
             )}
           </div>
 
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <label className="flex items-center gap-1">
-              <input type="checkbox" /> Remember me
-            </label>
-            <p>
-              Don’t have an account?{" "}
-              <a href="/sign-up" className="text-indigo-500 hover:underline">
-                click here!
-              </a>
-            </p>
-          </div>
-
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-all"
+            disabled={isLoading}
+            className={`w-full py-2 rounded-md transition-all text-white ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
           >
-            Sign in
+            {isLoading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
