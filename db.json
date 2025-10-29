@@ -45,7 +45,7 @@
     {
       "id": "1",
       "name": "Tiền đi học",
-      "imageUrl": "https://media.wired.com/photos/5bd883dc5b66a763e54f0b22/master/pass/macbookair3.jpg",
+      "imageUrl": "https://res.cloudinary.com/dxd5dmptq/image/upload/v1761697254/ezkjjxrl5rp1a4ivdzho.jpg",
       "status": true
     },
     {
@@ -113,6 +113,187 @@
       "balence": 123123123,
       "userId": "3",
       "categories": []
+    },
+    {
+      "id": "58f9",
+      "month": "2025-10",
+      "balence": 500000,
+      "userId": "2",
+      "categories": [
+        {
+          "id": 702727,
+          "categoryId": 1,
+          "budget": 200000
+        },
+        {
+          "id": 712174,
+          "categoryId": 2,
+          "budget": 100000
+        },
+        {
+          "id": 727327,
+          "categoryId": 3,
+          "budget": 100000
+        },
+        {
+          "id": 732953,
+          "categoryId": 4,
+          "budget": 100000
+        }
+      ]
+    },
+    {
+      "id": "975f",
+      "month": "2025-11",
+      "balence": 100000,
+      "userId": "2",
+      "categories": []
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx_001",
+      "userId": "2",
+      "month": "2025-10-03",
+      "categoryId": 1,
+      "amount": 200000,
+      "note": "Học online",
+      "createdAt": "2025-10-03T08:30:00.000Z"
+    },
+    {
+      "id": "tx_002",
+      "userId": "2",
+      "month": "2025-10-05",
+      "categoryId": 3,
+      "amount": 150000,
+      "note": "Ăn trưa",
+      "createdAt": "2025-10-05T12:05:00.000Z"
+    },
+    {
+      "id": "tx_003",
+      "userId": "2",
+      "month": "2025-10-08",
+      "categoryId": 4,
+      "amount": 50000,
+      "note": "Uống nước",
+      "createdAt": "2025-10-08T15:42:00.000Z"
+    },
+    {
+      "id": "tx_004",
+      "userId": "2",
+      "month": "2025-10-10",
+      "categoryId": 2,
+      "amount": 300000,
+      "note": "Đi chơi sapa",
+      "createdAt": "2025-10-10T18:10:00.000Z"
+    },
+    {
+      "id": "tx_005",
+      "userId": "2",
+      "month": "2025-10-12",
+      "categoryId": 3,
+      "amount": 100000,
+      "note": "Ăn trưa",
+      "createdAt": "2025-10-12T11:50:00.000Z"
+    },
+    {
+      "id": "tx_006",
+      "userId": "2",
+      "month": "2025-10-15",
+      "categoryId": 3,
+      "amount": 110000,
+      "note": "Mua bim sữa",
+      "createdAt": "2025-10-15T09:15:00.000Z"
+    },
+    {
+      "id": "tx_007",
+      "userId": "2",
+      "month": "2025-10-17",
+      "categoryId": 1,
+      "amount": 150000,
+      "note": "Học online",
+      "createdAt": "2025-10-17T20:00:00.000Z"
+    },
+    {
+      "id": "tx_008",
+      "userId": "2",
+      "month": "2025-10-20",
+      "categoryId": 4,
+      "amount": 50000,
+      "note": "Cà phê",
+      "createdAt": "2025-10-20T08:00:00.000Z"
+    },
+    {
+      "id": "tx_009",
+      "userId": "3",
+      "month": "2025-10-03",
+      "categoryId": 1,
+      "amount": 200000,
+      "note": "Học online",
+      "createdAt": "2025-10-03T08:30:00.000Z"
+    },
+    {
+      "id": "tx_010",
+      "userId": "3",
+      "month": "2025-10-05",
+      "categoryId": 3,
+      "amount": 150000,
+      "note": "Ăn trưa",
+      "createdAt": "2025-10-05T12:05:00.000Z"
+    },
+    {
+      "id": "tx_011",
+      "userId": "3",
+      "month": "2025-10-08",
+      "categoryId": 4,
+      "amount": 50000,
+      "note": "Uống nước",
+      "createdAt": "2025-10-08T15:42:00.000Z"
+    },
+    {
+      "id": "tx_012",
+      "userId": "3",
+      "month": "2025-10-10",
+      "categoryId": 2,
+      "amount": 300000,
+      "note": "Đi chơi sapa",
+      "createdAt": "2025-10-10T18:10:00.000Z"
+    },
+    {
+      "id": "tx_013",
+      "userId": "3",
+      "month": "2025-10-12",
+      "categoryId": 3,
+      "amount": 100000,
+      "note": "Ăn trưa",
+      "createdAt": "2025-10-12T11:50:00.000Z"
+    },
+    {
+      "id": "tx_014",
+      "userId": "3",
+      "month": "2025-10-15",
+      "categoryId": 3,
+      "amount": 110000,
+      "note": "Mua bim sữa",
+      "createdAt": "2025-10-15T09:15:00.000Z"
+    },
+    {
+      "id": "tx_015",
+      "userId": "3",
+      "month": "2025-10-17",
+      "categoryId": 1,
+      "amount": 150000,
+      "note": "Học online",
+      "createdAt": "2025-10-17T20:00:00.000Z"
+    },
+    {
+      "id": "tx_016",
+      "userId": "3",
+      "month": "2025-10-20",
+      "categoryId": 4,
+      "amount": 50000,
+      "note": "Cà phê",
+      "createdAt": "2025-10-20T08:00:00.000Z"
     }
   ]
 }

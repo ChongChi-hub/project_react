@@ -3,14 +3,28 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL as string;
 
 // ===== Dashboard =====
-export async function getDashboardData(): Promise<{ userCount: number; categoryCount: number }> {
-  const [users, categories] = await Promise.all([
+export async function getDashboardData(): Promise<{
+  userCount: number;
+  categoryCount: number;
+  totalTransactionCount: number;
+  totalSpending: number;
+}> {
+  const [users, categories, transactions] = await Promise.all([
     axios.get(`${API_URL}/users`),
     axios.get(`${API_URL}/categories`),
+    axios.get(`${API_URL}/transactions`),
   ]);
+
+  const totalSpending = transactions.data?.reduce(
+    (sum: number, t: any) => sum + (t.amount ?? 0),
+    0
+  );
+
   return {
     userCount: users.data.length ?? 0,
     categoryCount: categories.data.length ?? 0,
+    totalTransactionCount: transactions.data.length ?? 0,
+    totalSpending: totalSpending ?? 0,
   };
 }
 

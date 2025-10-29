@@ -1,12 +1,6 @@
 import { Layout, Dropdown } from "antd";
-import {
-  DownOutlined,
-  InfoCircleOutlined,
-  FolderOutlined,
-  HistoryOutlined,
-} from "@ant-design/icons";
+import { DownOutlined,InfoCircleOutlined,FolderOutlined,HistoryOutlined } from "@ant-design/icons";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-
 const { Header, Sider, Content } = Layout;
 
 // màu xám sáng Tailwind: #f3f4f6 (gray-100)
