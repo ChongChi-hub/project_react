@@ -18,7 +18,7 @@ export default function SignInForm() {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
 
-    // ✅ Validate cơ bản
+    // Validate cơ bản
     if (!email.trim()) newErrors.email = "Please enter your email.";
     else if (!isValidEmail(email))
       newErrors.email = "Email format is invalid.";
@@ -34,7 +34,7 @@ export default function SignInForm() {
         `${import.meta.env.VITE_API_URL}/users?email=${email}`
       );
 
-      // ❌ Không tìm thấy tài khoản
+      // Không tìm thấy tài khoản
       if (res.data.length === 0) {
         setErrors({ email: "Account not found." });
         return;
@@ -42,13 +42,13 @@ export default function SignInForm() {
 
       const user: User = res.data[0];
 
-      // ❌ Nếu role là admin → chặn đăng nhập tại đây
+      // Nếu role là admin → chặn đăng nhập tại đây
       if (user.role === "admin") {
         setErrors({ email: "Admin account cannot sign in here." });
         return;
       }
 
-      // ❌ Nếu tài khoản bị khóa (Deactive)
+      // Nếu tài khoản bị khóa (Deactive)
       if (user.status === false) {
         setErrors({
           email: "Your account has been deactivated. Please contact support.",
@@ -56,18 +56,18 @@ export default function SignInForm() {
         return;
       }
 
-      // ❌ Mật khẩu sai
+      //  Mật khẩu sai
       if (user.password !== password) {
         setErrors({ password: "Incorrect password." });
         return;
       }
 
-      // ✅ Đăng nhập thành công
+      //  Đăng nhập thành công
       localStorage.setItem("user", JSON.stringify(user));
       setSuccess(true);
       setErrors({});
 
-      // Chờ 2 giây rồi chuyển đến trang user home
+
       setTimeout(() => {
         navigate("/user/information");
       }, 2000);

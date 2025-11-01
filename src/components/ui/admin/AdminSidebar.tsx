@@ -62,7 +62,7 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      {/* Modal xác nhận đăng xuất (sáng, mờ nhẹ nền) */}
+      {/* Modal xác nhận đăng xuất */}
       {showLogoutConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-200 bg-opacity-60 backdrop-blur-[2px] z-50">
           <div className="bg-white rounded-xl shadow-2xl p-6 w-80 text-center border border-gray-100 animate-fadeIn">

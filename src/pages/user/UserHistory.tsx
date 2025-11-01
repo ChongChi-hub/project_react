@@ -26,13 +26,13 @@ const toYMD = (s: string) => (s ? s.slice(0, 7) : "");
 export default function UserHistory() {
   const [user, setUser] = useState<any>(null);
 
-  // Tháng + dữ liệu ngân sách (để hiển thị “Số tiền còn lại” cho đồng bộ 3 trang)
+
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const [monthly, setMonthly] = useState<MonthlyCategory | null>(null);
   const [budgetInput, setBudgetInput] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
-  // Categories để map tên
+
   const [categories, setCategories] = useState<Category[]>([]);
 
   // Lịch sử giao dịch
@@ -44,7 +44,6 @@ export default function UserHistory() {
   const [page, setPage] = useState(1);
   const pageSize = 8;
 
-  // ===== init user + month
   useEffect(() => {
     const raw = localStorage.getItem("user");
     if (raw) setUser(JSON.parse(raw));
@@ -63,7 +62,7 @@ export default function UserHistory() {
     setPage(1);
   };
 
-  // ===== fetch categories
+  // fetch categories
   useEffect(() => {
     (async () => {
       try {
@@ -75,7 +74,7 @@ export default function UserHistory() {
     })();
   }, []);
 
-  // ===== fetch monthly (để có “Số tiền còn lại” đồng bộ)
+  //fetch monthly (để có “Số tiền còn lại” đồng bộ)
   useEffect(() => {
     if (!user || !selectedMonth) return;
     (async () => {
@@ -88,18 +87,18 @@ export default function UserHistory() {
         setMonthly(found);
         setBudgetInput(found?.balence);
       } catch {
-        // không critical
+
       }
     })();
   }, [user, selectedMonth]);
 
-  // ===== fetch transactions
+
   const loadTransactions = async (uId: string, m: string) => {
     const { data } = await axios.get<Transaction[]>(
       `${API_URL}/transactions`,
       { params: { userId: uId } }
     );
-    // Lọc theo tháng (prefix 'YYYY-MM')
+
     return data.filter((t) => toYMD(t.month || t.createdAt) === m);
   };
 
@@ -112,7 +111,6 @@ export default function UserHistory() {
       .finally(() => setLoading(false));
   }, [user, selectedMonth]);
 
-  // ===== helpers
   const catName = (id: number) =>
     categories.find((c) => String(c.id) === String(id))?.name || `#${id}`;
 
@@ -127,7 +125,6 @@ export default function UserHistory() {
     return r > 0 ? r : 0;
   }, [budgetInput, monthly, totalAllocated]);
 
-  // ===== lọc + sắp xếp client
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     let data = [...list];
@@ -164,7 +161,7 @@ export default function UserHistory() {
     }
   };
 
-  // ===== columns table
+
   const columns: ColumnsType<Transaction> = [
     {
       title: "STT",
@@ -207,7 +204,6 @@ export default function UserHistory() {
 
   return (
     <div className="max-w-[880px] mx-auto">
-      {/* ===== Header giống 2 trang kia ===== */}
       <div className="bg-indigo-600 text-white rounded-[14px] px-6 py-5 shadow text-center">
         <p className="text-[15px] md:text-[16px] font-semibold">
           🎯 Kiểm soát chi tiêu thông minh

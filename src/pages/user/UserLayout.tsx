@@ -3,9 +3,9 @@ import { DownOutlined,InfoCircleOutlined,FolderOutlined,HistoryOutlined } from "
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
-// màu xám sáng Tailwind: #f3f4f6 (gray-100)
+
 const BG = "#f3f4f6";
-const BORDER = "#e5e7eb"; // gray-200
+const BORDER = "#e5e7eb";
 
 export default function UserLayout() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const pillActive =
     <Layout style={{ minHeight: "100vh", background: BG }}>
       {/* Header */}
       <Header
-        style={{ background: "#4f46e5" }} // indigo-600
+        style={{ background: "#4f46e5" }} 
         className="px-6 flex items-center justify-between shadow"
       >
         <h1 className="text-white font-semibold tracking-wide text-[15px]">
@@ -50,15 +50,13 @@ const pillActive =
           </button>
         </Dropdown>
       </Header>
-
-      {/* KHÔNG bọc max-w ở ngoài để Sider không bị căn giữa */}
       <Layout style={{ background: BG }}>
         {/* Sidebar sáng */}
         <Sider
-          theme="light" // 👈 quan trọng: ép AntD dùng theme sáng
+          theme="light"
           width={240}
           style={{
-            background: BG, // 👈 nền xám sáng
+            background: BG, 
             borderRight: `1px solid ${BORDER}`,
             position: "sticky",
             top: 64,
@@ -99,17 +97,16 @@ const pillActive =
           </div>
         </Sider>
 
-        {/* Content chỉ phần này căn giữa */}
         <Content style={{ background: BG }}>
           <div className="max-w-[980px] mx-auto my-4 md:my-8">
             <div className="bg-transparent rounded-xl">
-              {/* card trắng bao nội dung */}
               <div className="bg-white rounded-xl shadow-sm px-4 py-6 md:px-10">
                 <Outlet />
               </div>
             </div>
           </div>
         </Content>
+
       </Layout>
     </Layout>
   );

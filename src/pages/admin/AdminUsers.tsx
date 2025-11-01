@@ -13,7 +13,7 @@ export default function AdminUsers() {
     pageSize: 8,
   });
 
-  // 🟢 Lấy danh sách người dùng
+  // Lấy danh sách người dùng
   const fetchUsers = async () => {
     setLoading(true);
     try {
@@ -30,7 +30,7 @@ export default function AdminUsers() {
     fetchUsers();
   }, []);
 
-  // 🔴 Khóa / Mở khóa tài khoản
+  //  Khóa / Mở khóa tài khoản
   const handleToggleStatus = async (user: User) => {
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/users/${user.id}`, {
@@ -49,14 +49,14 @@ export default function AdminUsers() {
     }
   };
 
-  // 🧩 Lọc theo tên hoặc email
+  //  Lọc theo tên hoặc email
   const filteredUsers = users.filter(
     (u) =>
       u.fullName.toLowerCase().includes(search.toLowerCase()) ||
       u.email.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 🟨 Cấu hình cột bảng
+  // Cấu hình cột bảng
   const columns = [
     {
       title: "STT",

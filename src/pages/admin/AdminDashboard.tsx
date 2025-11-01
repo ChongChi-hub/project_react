@@ -15,7 +15,6 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const res = await getDashboardData();
-      // hỗ trợ cả 2 dạng: {data:{...}} hoặc {...}
       const payload = res && (res as any).data ? (res as any).data : res;
 
       setData({
@@ -55,8 +54,7 @@ export default function AdminDashboard() {
               </p>
             </div>
           </div>
-
-          {/* 📂 Category */}
+          {/*  Category */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">
             <p className="text-gray-500 text-sm uppercase mb-2">Category</p>
             <div className="flex items-end justify-between">
@@ -69,7 +67,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* 💰 Total Spending */}
+          {/*  Total Spending */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">
             <p className="text-gray-500 text-sm uppercase mb-2">
               Spending (VND)
@@ -83,7 +81,7 @@ export default function AdminDashboard() {
               </p>
             </div>
           </div>
-          {/* 💸 Total Transactions */}
+          {/*  Total Transactions */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">
             <p className="text-gray-500 text-sm uppercase mb-2">
               Total Transactions

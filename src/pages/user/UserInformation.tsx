@@ -12,7 +12,6 @@ import dayjs from "dayjs";
 const API_URL = import.meta.env.VITE_API_URL as string;
 const LS_MONTH_KEY = "lastSelectedMonth";
 
-// cắt về 'YYYY-MM'
 const toYMD = (s: string) => (s ? s.slice(0, 7) : "");
 
 export default function UserInformation() {
@@ -22,15 +21,12 @@ export default function UserInformation() {
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   // dữ liệu tháng hiện tại từ API
   const [monthlyData, setMonthlyData] = useState<MonthlyCategory | null>(null);
-  // input ngân sách (đang gõ)
+  // input ngân sách 
   const [budgetInput, setBudgetInput] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-
-  // modals giữ nguyên
   const [openInfo, setOpenInfo] = useState(false);
   const [openPass, setOpenPass] = useState(false);
 
-  // đọc user + khởi tạo tháng (ưu tiên lastSelectedMonth)
   useEffect(() => {
     const raw = localStorage.getItem("user");
     if (raw) setUser(JSON.parse(raw));
@@ -39,12 +35,12 @@ export default function UserInformation() {
     setSelectedMonth(saved || fallback);
   }, []);
 
-  // đổi tháng → lưu cả localStorage
+  // đổi tháng lưu localStorage
   const handleChangeMonth: DatePickerProps["onChange"] = (
     _date: Dayjs | null,
     dateString: string | string[]
   ) => {
-    const s = Array.isArray(dateString) ? dateString[0] : dateString; // đảm bảo là string
+    const s = Array.isArray(dateString) ? dateString[0] : dateString;
     const m = String(s); // 'YYYY-MM'
     setSelectedMonth(m);
     localStorage.setItem(LS_MONTH_KEY, m);
@@ -60,7 +56,6 @@ export default function UserInformation() {
           `${API_URL}/monthlyCategories`,
           { params: { userId: String(user.id) } }
         );
-        // tìm record tháng khớp (prefix khớp cả 'YYYY-MM-DD')
         const found =
           data.find((i) => toYMD(i.month) === selectedMonth) || null;
         setMonthlyData(found);
@@ -73,13 +68,11 @@ export default function UserInformation() {
     })();
   }, [user, selectedMonth]);
 
-  // tổng ngân sách theo danh mục (nếu có)
   const totalCategoryBudget = useMemo(() => {
     if (!monthlyData?.categories?.length) return 0;
     return monthlyData.categories.reduce((sum, c) => sum + (c.budget || 0), 0);
   }, [monthlyData]);
 
-  // số tiền còn lại = (ngân sách đang nhập hoặc từ API) - tổng ngân sách theo danh mục
   const remaining = useMemo(() => {
     const base = budgetInput ?? monthlyData?.balence ?? 0;
     const remain = base - totalCategoryBudget;
@@ -133,7 +126,6 @@ export default function UserInformation() {
 
   return (
     <div className="max-w-[880px] mx-auto">
-      {/* Banner primary */}
       <div className="bg-indigo-600 text-white rounded-[14px] px-6 py-5 shadow text-center">
         <p className="text-[15px] md:text-[16px] font-semibold">
           🎯 Kiểm soát chi tiêu thông minh
@@ -174,7 +166,7 @@ export default function UserInformation() {
         </div>
       </div>
 
-      {/* Ngân sách tháng + Cảnh báo */}
+      {/* Ngân sách tháng, Cảnh báo */}
       <div className="bg-white rounded-[10px] border border-gray-200 shadow-sm px-6 py-5 mt-3">
         <div className="flex flex-col md:flex-row items-center justify-center gap-3">
           <span className="text-gray-600 text-[13px]">💰 Ngân sách tháng:</span>
@@ -212,7 +204,7 @@ export default function UserInformation() {
         )}
       </div>
 
-      {/* Thông tin cá nhân + 2 nút modal (giữ nguyên) */}
+      {/* Thông tin cá nhân + 2 nút modal */}
       <h3 className="text-center text-indigo-700 font-semibold text-lg mt-6">
         Quản Lý Thông tin cá nhân
       </h3>
@@ -263,7 +255,7 @@ export default function UserInformation() {
         </div>
       </div>
 
-      {/* Modals giữ nguyên */}
+      {/* Modals*/}
       <ModalChangeInformation
         open={openInfo}
         onClose={() => setOpenInfo(false)}

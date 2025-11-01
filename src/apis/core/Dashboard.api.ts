@@ -25,7 +25,6 @@ export interface DashboardStats {
 
 export const DashboardApi = {
   // Lấy thống kê tổng quan
-  // Lấy thống kê tổng quan (đúng logic)
 getDashboardData: async (): Promise<DashboardStats> => {
   try {
     const [usersRes, categoriesRes, monthlyRes, txRes] = await Promise.all([
@@ -40,10 +39,10 @@ getDashboardData: async (): Promise<DashboardStats> => {
     const monthly = monthlyRes.data as any[];
     const transactions = (txRes?.data as any[]) || [];
 
-    // ✅ Tổng ngân sách tháng (Total Money)
+    //  Tổng ngân sách tháng (Total Money)
     const totalMoney = monthly.reduce((sum, m) => sum + (m.balence || 0), 0);
 
-    // ✅ Tổng chi tiêu thực tế (Spending)
+    //  Tổng chi tiêu thực tế (Spending)
     const totalSpending = transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
 
     return {

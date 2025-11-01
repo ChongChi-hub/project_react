@@ -73,7 +73,7 @@ export default function UserCategories() {
     localStorage.setItem(LS_MONTH_KEY, m);
   };
 
-  // nạp danh mục khả dụng
+
   useEffect(() => {
     (async () => {
       try {
@@ -85,7 +85,7 @@ export default function UserCategories() {
     })();
   }, []);
 
-  // nạp bản ghi monthly theo user + tháng
+
   const loadMonthly = async (uId: string, month: string) => {
     const { data } = await axios.get<MonthlyCategory[]>(
       `${API_URL}/monthlyCategories`,
@@ -104,7 +104,7 @@ export default function UserCategories() {
       .finally(() => setLoading(false));
   }, [user, selectedMonth]);
 
-  // helpers
+
   const nameOf = (categoryId: number | string) => {
     const found = allCategories.find((c) => String(c.id) === String(categoryId));
     return found?.name || `Danh mục #${categoryId}`;
@@ -122,7 +122,7 @@ export default function UserCategories() {
     return r > 0 ? r : 0;
   }, [budgetInput, monthly, totalCategoryBudget]);
 
-  // ======= lưu ngân sách tháng (giống Information) =======
+  // ======= lưu ngân sách tháng=======
   const handleSaveBudget = async () => {
     if (!user) return;
     if (!selectedMonth) {
@@ -197,7 +197,7 @@ export default function UserCategories() {
           `${API_URL}/monthlyCategories/${monthly.id}`,
           { categories: nextCats }
         );
-        setMonthly(data); // -> remaining cập nhật tức thời
+        setMonthly(data);
       } else {
         const { data } = await axios.post<MonthlyCategory>(
           `${API_URL}/monthlyCategories`,
@@ -271,7 +271,6 @@ export default function UserCategories() {
 
   return (
     <div className="max-w-[880px] mx-auto">
-      {/* ====== phần TRÊN giống Information ====== */}
       <div className="bg-indigo-600 text-white rounded-[14px] px-6 py-5 shadow text-center">
         <p className="text-[15px] md:text-[16px] font-semibold">
           🎯 Kiểm soát chi tiêu thông minh
@@ -348,8 +347,6 @@ export default function UserCategories() {
           </div>
         )}
       </div>
-
-      {/* ====== khối QUẢN LÝ DANH MỤC (thay cho Thông tin cá nhân) ====== */}
       <Card
         className="rounded-xl shadow-sm mt-6"
         title={

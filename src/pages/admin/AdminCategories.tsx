@@ -26,7 +26,7 @@ export default function AdminCategories() {
   const [fileList, setFileList] = useState<any[]>([]);
   const [uploading, setUploading] = useState(false);
 
-  // 🟢 Lấy danh sách category
+  //  Lấy danh sách category
   const fetchCategories = async () => {
     setLoading(true);
     try {
@@ -43,7 +43,7 @@ export default function AdminCategories() {
     fetchCategories();
   }, []);
 
-  // 🔴 Chuyển trạng thái category
+  // Chuyển trạng thái category
   const handleToggleStatus = async (category: Category) => {
     try {
       await axios.patch(
@@ -65,7 +65,7 @@ export default function AdminCategories() {
     }
   };
 
-  // 🧩 Cột bảng
+  // Cột bảng
   const columns = [
     {
       title: "STT",
@@ -145,20 +145,19 @@ export default function AdminCategories() {
     },
   ];
 
-  // 🟣 Lọc theo tên
+  //  Lọc theo tên
   const filteredCategories = categories.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 🟩 Khi nhấn Add
+  // Khi nhấn Add
   const handleAdd = () => {
     setEditingCategory(null);
     form.resetFields();
     setFileList([]);
     setIsModalOpen(true);
   };
-
-  // 🟧 Khi nhấn Edit
+  // Khi nhấn Edit
   const handleEdit = (category: Category) => {
     setEditingCategory(category);
     form.setFieldsValue({ name: category.name });
@@ -176,7 +175,7 @@ export default function AdminCategories() {
     setIsModalOpen(true);
   };
 
-  // 🟦 Upload lên Cloudinary thật (giữ UI/CSS nguyên)
+  //  Upload lên Cloudinary thật
   const handleUpload = async (file: File) => {
     try {
       if (!file.type.startsWith("image/")) {
@@ -191,7 +190,6 @@ export default function AdminCategories() {
       setUploading(true);
       const imageUrl = await uploadToCloudinary(file as File);
 
-      // 👇 antd cần shape có status/url để hiển thị
       setFileList([
         {
           uid: String(Date.now()),
@@ -211,7 +209,7 @@ export default function AdminCategories() {
     return false; // chặn antd tự upload
   };
 
-  // 🟦 Lưu (thêm hoặc cập nhật)
+  // Lưu (thêm hoặc cập nhật)
   const handleSaveCategory = async () => {
     try {
       const values = await form.validateFields();
@@ -304,9 +302,8 @@ export default function AdminCategories() {
             fileList={fileList}
             onRemove={() => setFileList([])}
             beforeUpload={(file) => {
-              // antd đưa vào RcFile, nhưng dùng như File được
               handleUpload(file as unknown as File);
-              return Upload.LIST_IGNORE; // 👈 chặn antd tự thêm, mình tự setFileList
+              return Upload.LIST_IGNORE;
             }}
           >
             {fileList.length === 0 && (
